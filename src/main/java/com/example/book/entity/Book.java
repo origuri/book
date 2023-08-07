@@ -8,10 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
+@Data
 public class Book {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // 해당 데이터베이스 번호증가 전략을 따라가겠다.
