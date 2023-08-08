@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
  * 서비스는 기능적인 로직을 검증하는 곳.
  * bookRepository를 db랑도 통신하기 때문에 di하는 순간 단위테스트가 아닌 통합테스트가 됨.
  * 근데 이게 없으면 테스트가 성공했는지 확인이 안됌.
- * 그래서 BookRepository를 가짜 버전으로 띄워 주는 방법이 있음.
+ * 그래서 BookRepository를 가짜 버전으로 띄워 주는 방법이 있음.ㅠ
  *
  * @ExtendWith(MockitoExtension.class)
  * Spring IoC에 띄워주는게 아니라 Mock IoC에 띄워주는 것.
@@ -29,6 +29,6 @@ public class BookServiceUnitTest {
     * */
     @InjectMocks
     private BookService bookService;
-    @Mock
+    @Mock // -> @InjectMocks으로 인해 di 됨.
     private BookRepository bookRepository;
 }
