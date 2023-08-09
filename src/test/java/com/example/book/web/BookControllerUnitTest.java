@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -25,9 +27,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -143,6 +145,76 @@ public class BookControllerUnitTest {
                 .andExpect(jsonPath("$.[0].title").value("스프링"))
                 .andDo(MockMvcResultHandlers.print());
 
+
+    }
+
+    @Test
+    public void findById_테스트() throws Exception{
+        // given
+        Long id = 1L;
+        when(bookService.한건가저오기(id)).thenReturn(new Book(1L, "자바", "쌀"));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/book/{id}", id)
+                .accept(MediaType.APPLICATION_JSON));
+
+        //then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect((jsonPath("$.title").value("자바")))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+
+    @Test
+    public void update_테스트() throws Exception{
+        // given
+        Long id = 1L;
+        Book book = new Book(null,"c++ 따라하기","임오리");
+        String content = new ObjectMapper().writeValueAsString(book);
+        log.info("json content -> {}",content);
+        // 내가 저장하기를 하면 이런 결과가 나와야 해
+        when(bookService.수정하기(id,book)).thenReturn(new Book(1L, "c++ 따라하기", "임오리"));
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                put("/book/{id}", id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect((jsonPath("$.title").value("c++ 따라하기")))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    public void detele_테스트() throws Exception{
+        // given
+        Long id = 1L;
+
+        // 내가 저장하기를 하면 이런 결과가 나와야 해
+        when(bookService.삭제하기(id)).thenReturn("ok");
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                delete("/book/{id}", id)
+                        .accept(MediaType.TEXT_PLAIN)
+        );
+
+        //then
+        resultActions.andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+        MvcResult requestResult = resultActions.andReturn();
+        String result = requestResult.getResponse().getContentAsString();
+
+        assertEquals("ok",result);
 
     }
  }

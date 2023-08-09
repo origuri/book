@@ -2,11 +2,18 @@ package com.example.book.service;
 
 
 
+import com.example.book.entity.Book;
 import com.example.book.repository.BookRepository;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 /*
  * 서비스는 기능적인 로직을 검증하는 곳.
@@ -31,4 +38,18 @@ public class BookServiceUnitTest {
     private BookService bookService;
     @Mock // -> @InjectMocks으로 인해 di 됨.
     private BookRepository bookRepository;
+
+
+    @Test
+    public void 저장하기테스트(){
+        // given
+        Book book = new Book(null, "제목1","저자1");
+        when(bookRepository.save(book)).thenReturn(book);
+
+        // when
+        Book bookEntity = bookService.저장하기(book);
+
+        //then
+        assertEquals(book,bookEntity);
+    }
 }
