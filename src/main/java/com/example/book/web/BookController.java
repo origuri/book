@@ -20,7 +20,8 @@ public class BookController {
     public ResponseEntity<?> save(@RequestBody Book book){
         return new ResponseEntity<>(bookService.저장하기(book), HttpStatus.CREATED);
     }
-    @GetMapping("/book")
+    @CrossOrigin // 외부에서 오는 자바스크립트 요청을 허용해줌.
+    @GetMapping("/books")
     public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(bookService.모두가져오기(), HttpStatus.OK);
     }

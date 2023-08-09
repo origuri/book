@@ -12,3 +12,7 @@
 - npm i redux
 - npm i react-router-dom
 - npm install react-bootstrap bootstrap
+
+```txt
+import 'bootstrap/dist/css/bootstrap.min.css';
+```
