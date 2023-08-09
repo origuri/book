@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@CrossOrigin // 외부에서 오는 자바스크립트 요청을 허용해줌.
 public class BookController {
 
     private final BookService bookService;
@@ -20,7 +21,7 @@ public class BookController {
     public ResponseEntity<?> save(@RequestBody Book book){
         return new ResponseEntity<>(bookService.저장하기(book), HttpStatus.CREATED);
     }
-    @CrossOrigin // 외부에서 오는 자바스크립트 요청을 허용해줌.
+
     @GetMapping("/books")
     public ResponseEntity<?> findAll(){
         return new ResponseEntity<>(bookService.모두가져오기(), HttpStatus.OK);

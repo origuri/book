@@ -3,8 +3,9 @@ import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const BookItem = (props) => {
+  // book의 데이터를 명시할 것. 다른 데이터가 올 수도 있으니!
   const { id, title, author } = props.book;
-  console.log('sdafsdafdklfjkldsfjdfjsd', props);
+  console.log('=====================>', props);
   return (
     <Card>
       <Card.Body>
