@@ -25,6 +25,9 @@ const SaveForm = () => {
     setBook({
       ...book,
       // name = title or author
+      /*
+       * computed 문법 : 동적으로 key와 value값이 할당된다.
+       * */
       [e.target.name]: e.target.value,
     });
   };
