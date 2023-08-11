@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 const Detail = (props) => {
@@ -38,7 +38,9 @@ const Detail = (props) => {
   return (
     <div>
       <h1>상세보기</h1>
-      <Button variant={'warning'}>수정</Button>{' '}
+      <Button variant={'warning'}>
+        <Link to={'/updateForm/' + id}>수정</Link>
+      </Button>{' '}
       {/*
             상세 페이지라 삭제할 id를 넘길 필요가 없지만 만약 넘기게 된다면 이런식으로
             <Button variant={'danger'} onClick={() => deleteBook(book.id)}>

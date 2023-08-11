@@ -9,10 +9,7 @@ const SaveForm = () => {
   /*
    * 오브젝트를 초기화
    * */
-  const [book, setBook] = useState({
-    title: '',
-    author: '',
-  });
+  const [book, setBook] = useState({});
 
   const changeValue = (e) => {
     /*

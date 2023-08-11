@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 * security를 사용하게 되면 @crossOrigin보다 security가 먼저 작동되서 소용없음.
 * cors필터를 만들어서 security가 cors를 해제하도록 해야함.
 * */
-@CrossOrigin
+//@CrossOrigin
 public class BookController {
 
     private final BookService bookService;
